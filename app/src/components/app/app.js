@@ -81,12 +81,14 @@ export default class App extends React.Component{
     }
 
     isCurentButton(btn, data){
-  
-        if(btn === 'All')  return data;
-
-        if(btn === 'Active') return data.filter((item) => !item.done); 
-        
-        if(btn === 'Done') return data.filter((item) => item.done);
+        switch(btn){
+            case 'All': 
+                return data;
+            case 'Active':
+                return data.filter((item) => !item.done); 
+            case 'Done':
+                return data.filter((item) => item.done);
+        }
     }
 
     setCurentBtn = (e) => {
@@ -98,18 +100,14 @@ export default class App extends React.Component{
     }
 
     onSearchInData(search, data){
-         return data.filter((item) => {
-            if(item.label.slice(0, search.length) === search){
-                return item;
-            }
-        })
+         return data.filter((item) => item.label.indexOf(search) > -1);
     }
 
-    returnCurentData(search,btn,data,onSearch, isCurentBtn){
-        const cur_data = isCurentBtn(btn,data);
+    returnCurentData(search,btn,data){
+        const cur_data = this.isCurentButton(btn,data);
 
         if(search.length > 0){
-            return onSearch(search, cur_data)
+            return this.onSearchInData(search, cur_data)
         }else{
             return cur_data;
         }
@@ -121,6 +119,8 @@ export default class App extends React.Component{
         const done = this.state.todo_data.filter((item) => item.done).length;
 
         const todo = this.state.todo_data.length - done;
+
+        const curent_list = this.returnCurentData(search,active_button, todo_data);
 
 
         return(
@@ -138,13 +138,8 @@ export default class App extends React.Component{
                             curent   = {active_button}/>
                     </div>
                     <TodoList 
-                            data                = {todo_data}
+                            data                = {curent_list}
                             search              = {search}
-                            isCurentBtn         = {this.isCurentButton}
-                            isSearch            = {this.onSearchInData}
-                            search              = {search}
-                            curentData          = {this.returnCurentData}
-                            curentBtn           = {active_button}
                             onDeleted           = {this.deleteItem}
                             itemToggleImportant = {this.itemToggleImportant}
                             itemToggleDone      = {this.itemToggleDone}/>

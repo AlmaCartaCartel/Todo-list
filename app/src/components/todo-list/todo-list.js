@@ -11,11 +11,9 @@ export default class TodoList extends React.Component{
 
 
     render(){
-        const {data, onDeleted, itemToggleImportant, itemToggleDone, curentBtn, isCurentBtn, isSearch, search ,curentData} = this.props;
+        const {data, onDeleted, itemToggleImportant, itemToggleDone} = this.props;
 
-        const list_data = curentData(search,curentBtn,data,isSearch, isCurentBtn);
-
-        const list = list_data.map(( item )=>{
+        const list = data.map(( item )=>{
     
         const {id , ...props} = item;
     

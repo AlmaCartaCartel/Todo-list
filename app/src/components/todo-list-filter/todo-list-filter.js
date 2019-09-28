@@ -5,30 +5,41 @@ import './todo-list-filter.css';
 
 
 export default class TodoFilter extends React.Component{
+    state = {
+        buttons: [
+            {name: 'All', label: 'All'},
+            {name: 'Active', label: 'Active'},
+            {name: 'Done', label: 'Done'}
+        ]
+    }
+
     render(){
         const active = 'btn btn-info';
         const not_active = 'btn btn-outline-secondary';
 
         const {onCurent , curent} = this.props;
 
+        const buttons = this.state.buttons.map(({name, label}) => {
+            const bol = curent === name;
+            const clas = bol ? active : not_active;
+
+            return(
+                <button
+                  key       = {name}
+                  className = {clas}
+                  onClick   = {onCurent}
+                  value     = {name} 
+                  >
+                    {label}
+                </button>
+            )
+        })
+        
+
         return(
             <div className='btn-group'>
-            <button className={curent === 'All' ? active: not_active}
-                    onClick={onCurent}
-                    value = 'All'>
-                        All
-            </button>
-            <button className={curent === 'Active' ? active: not_active}
-                    onClick={onCurent}
-                    value = 'Active'>
-                        Active
-            </button>
-            <button className={curent === 'Done' ? active: not_active}
-                    onClick={onCurent}
-                    value = 'Done'>
-                        Done
-            </button>
-        </div>
+                {buttons}
+            </div>
         )
     }
 }

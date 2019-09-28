@@ -1,0 +1,10 @@
+.todo-list{
+    margin-top: 5px;
+    margin-left: 0px;
+}
+.todo-item{
+    padding: 5px 5px 5px 10px;
+    width: 350px;
+    min-height: 50px;
+    max-height: 500px;
+}
